@@ -1,4 +1,5 @@
 <?php
+require '../services/UserService.php';
 Flight::route("GET /users", function(){
     Flight::json(Flight::user_service()->get_all());
 });

@@ -5,7 +5,6 @@ class UserService extends BaseService{
     public function __construct(){
         parent::__construct(new UserDao());
     }
-
     public function add($entity){
         return parent::add($entity);
 
