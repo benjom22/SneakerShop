@@ -1,4 +1,5 @@
 <?php
+
 Flight::route("GET /orders", function(){
     Flight::json(Flight::order_service()->get_all());
 });
