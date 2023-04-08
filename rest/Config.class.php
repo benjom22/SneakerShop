@@ -1,8 +1,8 @@
 <?php
 class Config {
     public static function DB_HOST(){
-       // return 'localhost';
-        return '127.0.0.1';
+        return 'localhost';
+
     }
 
     public static function DB_USERNAME(){
@@ -10,7 +10,7 @@ class Config {
     }
 
     public static function DB_PASSWORD(){
-        return 'amsa2019';
+        return '';
     }
 
     public static function DB_SCHEMA(){

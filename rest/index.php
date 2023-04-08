@@ -1,7 +1,7 @@
 <?php
 require '../vendor/autoload.php';
-require 'services/ProductService.php';
-require_once './routes/ProductRoute.php';
-Flight::register("product_service", "ProductService");
-Flight::json(Flight::product_service()->get_all());
+require 'services/SizeService.php';
+require_once './routes/SizeRoutes.php';
+Flight::register("size_service", "SizeService");
+Flight::json(Flight::size_service()->get_all());
 ?>
