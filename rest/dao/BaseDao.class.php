@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../Config.class.php";
+require_once __DIR__."/../Config.class.php";
 class BaseDao
 {
     private $conn;
@@ -13,8 +13,9 @@ class BaseDao
             $servername = Config::DB_HOST();
             $username = Config::DB_USERNAME();
             $password = Config::DB_PASSWORD();
+            $port = Config::DB_PORT();
             $schema = Config::DB_SCHEMA();;
-            $this->conn = new PDO("mysql:host=$servername;dbname=$schema", $username, $password);
+            $this->conn = new PDO("mysql:host=$servername;port = $port;dbname=$schema", $username, $password);
             // set the PDO error mode to exception
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //echo "Connected successfully";

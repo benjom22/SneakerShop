@@ -1,4 +1,7 @@
 <?php
+Flight::route("GET /connection-check", function(){
+    Flight::base_dao(); 
+});
 Flight::route("GET /sizes", function(){
     Flight::json(Flight::size_service()->get_all());
 });
