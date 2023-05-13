@@ -1,4 +1,54 @@
 <?php
+use OpenApi\Annotations as OA;
+/**
+ * @OA\Tag(
+ *     name="category",
+ *     description="Category related operations"
+ * )
+ * @OA\Info(
+ *     version="1.0",
+ *     title="Sneaker Shop Category API Testing ",
+ *     description="Example info",
+ *     @OA\Contact(name="Swagger API Team")
+ * )
+ * @OA\Server(
+ *     url="http://localhost/SneakerShopProject/rest/routes",
+ *     description="API server"
+ * )
+ */
+/**
+ * @OA\Post(
+ *     path="/",
+ *     summary="adds a new category",
+ *     description="Adds a new category",
+ *     operationId="addCategory",
+ *     tags={"category"},
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 @OA\Property(
+ *                     property="categoryName",
+ *                     type="string"
+ *                 ),
+ *                
+ *                 example={"categoryName" : "adult"}
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="OK",
+ *         @OA\JsonContent(
+ *             oneOf={
+ *                 @OA\Schema(type="boolean")
+ *             },
+ *             @OA\Examples(example="result", value={"success": true}, summary="An result object."),
+ *             @OA\Examples(example="bool", value=false, summary="A boolean value."),
+ *         )
+ *     )
+ * )
+ */
 Flight::route("GET /categories", function(){
     Flight::json(Flight::category_service()->get_all());
 });

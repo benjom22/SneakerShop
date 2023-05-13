@@ -1,4 +1,5 @@
 <?php
+
 require '../vendor/autoload.php';
 require 'services/SizeService.php';
 require_once './routes/SizeRoutes.php';
