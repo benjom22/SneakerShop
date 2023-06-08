@@ -53,6 +53,18 @@ Flight::route("GET /categories", function(){
     Flight::json(Flight::category_service()->get_all());
 });
 
+Flight::route('GET /categories_filter', function(){
+    // Your SQL query to retrieve users from the database
+    $sql = "SELECT categoryID, categoryName FROM category";
+    
+    // Execute the query and fetch the results
+    $category = Flight::db()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Return the results as a JSON-encoded array
+    Flight::json($category);
+});
+
+
 Flight::route("GET /category_by_id", function(){
     Flight::json(Flight::category_service()->get_by_id(Flight::request()->query['id']));
 });
