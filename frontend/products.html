@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -48,105 +50,8 @@
             </select>
         </div>
 
-        <div class="row">
-            <div class="col-4">
-                <img src="images/aj11.jpg">
-                <h4>Air Jordan 11 Low</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>90.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/force.jpg">
-                <h4>Nike Air Force 1</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>70.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/lbj.jpg">
-                <h4>Los Angeles Lakers T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>35.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/lbjcity.jpg">
-                <h4>LeBron James City Edition</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>              
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>45.00$</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                <img src="images/aj11.jpg">
-                <h4>Air Jordan 11 Low</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>90.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/force.jpg">
-                <h4>Nike Air Force 1</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>70.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/lbj.jpg">
-                <h4>Los Angeles Lakers T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>35.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/lbjcity.jpg">
-                <h4>LeBron James City Edition</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>              
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>45.00$</p>
-            </div>
+        <div class="row" id="row">
+          
         </div>
 
         <div class="page-btn">
@@ -210,6 +115,32 @@
                 MenuItems.style.maxHeight = "0px";
             }
         }
+
+
+
+        
+        getProducts();
+        function getProducts(){
+            $.get('../rest/products', function(data){
+            var html = '';
+            for(var i=0; i<data.length; i++){
+                html+= 
+                '<div class="col-4" id="col-4" onClick="singleProduct('+data[i].id+')">'+
+                '<img src="images/aj11.jpg">'+
+                '<h4>'+data[i].productName+'</h4>'+
+                '<p>'+data[i].productPrice+"$"+'</p>'+
+                '</div>';
+            }
+            $("#row").html(html);
+            console.log(data);
+            });
+        }
+
+        function singleProduct(productId){
+            localStorage.setItem("Productid", productId);
+            window.location.href = 'single-product.html';
+        }
+
     </script>
 
 </body>

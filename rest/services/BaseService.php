@@ -11,6 +11,10 @@ class BaseService {
         return $this->dao->get_all();
     }
 
+    public function get_latest(){
+        return $this->dao->get_latest();
+    }
+
     public function get_by_id($id){
         return $this->dao->get_by_id($id);
     }

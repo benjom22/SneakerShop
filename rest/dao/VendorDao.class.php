@@ -1,5 +1,5 @@
 <?php
-require 'BaseDao.class.php';
+require_once "BaseDao.class.php";
 class VendorDao extends BaseDao{
     public function __construct(){
         parent::__construct("vendors");

@@ -10,7 +10,7 @@ class Config {
     }
 
     public static function DB_PASSWORD(){
-        return '';
+        return 'ha10be14';
     }
     public static function DB_PORT(){
         return "3306";

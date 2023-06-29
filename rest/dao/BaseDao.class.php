@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__."/../Config.class.php";
-class BaseDao
-{
-    private $conn;
+class BaseDao{
+    public $conn;
 
     private $table_name;
 
@@ -10,11 +9,11 @@ class BaseDao
     {
         try {
             $this->table_name = $table_name;
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $port = 3306;
-            $schema = "sneakershop";
+            $servername = Config::DB_HOST();
+            $username = Config::DB_USERNAME();
+            $password = Config::DB_PASSWORD();
+            $port = Config::DB_PORT();
+            $schema = Config::DB_SCHEMA();
             $this->conn = new PDO("mysql:host=$servername;port = $port;dbname=$schema", $username, $password);
             // set the PDO error mode to exception
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -30,6 +29,13 @@ class BaseDao
     public function get_all()
     {
         $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_latest()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name . " ORDER BY id DESC LIMIT 4");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
