@@ -24,7 +24,7 @@ Flight::register("product_service", "ProductService");
 Flight::register("productphoto_service", "ProductPhotoService");
 Flight::register("user_service", "UserService");
 Flight::register("vendor_service", "VendorService");
-
+Flight::register('userDao', "UserDao");
 
 
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/user-service.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+</head>
+<body>
+    
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <img src="images/logo.jpg" width="125px">
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li><a href="">Account</a></li>
+                </ul>   
+            </nav>
+            <img src="images/cart.png" width="30px" height="30px">
+            <img src="images/hamburger.png" class="menu-icon" onclick="menutoggle()">
+        </div>
+    </div>
+
+
+   <div class="tables" id="tables">
+    <table id="tableP">
+
+    </table>
+   </div>
+
+</body>
+
+<script>
+
+    getProducts();
+    function getProducts() {
+    $.ajax({
+        url: '../rest/products',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            var html = '<tr>'+
+                '<th>Product name</th>'+
+                '<th>Product description</th>'+
+                '<th>Product price</th>'+
+                '</tr>'; // Initialize the variable outside the loop
+            for(var i = 0; i < data.length; i++){
+                html += 
+                "<tr>" +
+                "<td>" +
+                data[i].productName +
+                "</td>" +
+                "<td>" +
+                data[i].productDescription +
+                "</td>" +
+                "<td>" +
+                data[i].productPrice +
+                "</td>" +
+                "</tr>"; // Close the <tr> tag for each record
+            }
+            $("#tableP").html(html);
+            console.log(data);
+        },
+        error: function (xhr, status, error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
+
+
+</script>
+</html>

@@ -1,41 +1,51 @@
 <?php
-Flight::route("GET /users", function(){
-    Flight::json(Flight::user_service()->get_all());
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+
+ /**
+* @OA\Post(
+*     path="/login", 
+*     description="Login",
+*     tags={"login"},
+*     @OA\RequestBody(description="Login", required=true,
+*       @OA\MediaType(mediaType="application/json",
+*    			@OA\Schema(
+*             @OA\Property(property="email", type="string", example="demo@gmail.com",	description="Student email" ),
+*             @OA\Property(property="password", type="string", example="12345",	description="Password" ),
+*        )
+*     )),
+*     @OA\Response(
+*         response=200,
+*         description="Logged in successfuly"
+*     ),
+*     @OA\Response(
+*         response=500,
+*         description="Error"
+*     )
+* )
+*/
+Flight::route('POST /login', function(){
+    $login = Flight::request()->data->getData();
+    $user = Flight::userDao()->get_user_by_email($login['email']);
+    if(count($user) > 0){
+        $user = $user[0];
+    }
+    if (isset($user['id'])){
+      if($user['password'] == md5($login['password'])){
+        unset($user['password']);
+        $user['is_admin'] = false;
+        $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256');
+        Flight::json(['token' => $jwt]);
+      }else{
+        Flight::json(["message" => "Wrong password"], 404);
+      }
+    }else{
+      Flight::json(["message" => "User doesn't exist"], 404);
+  }
 });
 
-Flight::route("GET /user_by_id", function(){
-    Flight::json(Flight::user_service()->get_by_id(Flight::request()->query['id']));
-});
 
-Flight::route("GET /users/@id", function($id){
-    Flight::json(Flight::user_service()->get_by_id($id));
-});
 
-Flight::route("DELETE /users/@id", function($id){
-    Flight::user_service()->delete($id);
-    Flight::json(['message' => "user deleted successfully"]);
-});
-
-Flight::route("POST /user", function(){
-    $request = Flight::request()->data->getData();
-    Flight::json(['message' => "user added successfully",
-        'data' => Flight::user_service()->add($request)
-    ]);
-});
-
-Flight::route("PUT /user/@id", function($id){
-    $user = Flight::request()->data->getData();
-    Flight::json(['message' => "user edit successfully",
-        'data' => Flight::user_service()->update($user, $id)
-    ]);
-});
-
-Flight::route("GET /users/@name", function($name){
-    echo "Hello from /users route with name= ".$name;
-});
-
-Flight::route("GET /users/@name/@status", function($name, $status){
-    echo "Hello from /users route with name = " . $name . " and status = " . $status;
-});
-
-?>
+ ?>
