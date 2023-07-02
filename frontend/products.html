@@ -53,14 +53,6 @@
         <div class="row" id="row">
           
         </div>
-
-        <div class="page-btn">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>&#8594;</span>
-        </div>
       </div>  
 
 
@@ -126,7 +118,7 @@
             for(var i=0; i<data.length; i++){
                 html+= 
                 '<div class="col-4" id="col-4" onClick="singleProduct('+data[i].id+')">'+
-                '<img src="images/aj11.jpg">'+
+                '<img src='+data[i].productPhoto+'>'+
                 '<h4>'+data[i].productName+'</h4>'+
                 '<p>'+data[i].productPrice+"$"+'</p>'+
                 '</div>';

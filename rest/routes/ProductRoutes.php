@@ -7,6 +7,14 @@ Flight::route("GET /latest", function(){
     Flight::json(Flight::product_service()->get_latest());
 });
 
+Flight::route("GET /featured", function(){
+    Flight::json(Flight::product_service()->featured_products());
+});
+
+Flight::route("GET /special", function(){
+    Flight::json(Flight::product_service()->special_product());
+});
+
 Flight::route("GET /product_by_id", function(){
     Flight::json(Flight::product_service()->get_by_id(Flight::request()->query['id']));
 });

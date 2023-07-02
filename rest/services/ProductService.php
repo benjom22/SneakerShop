@@ -8,7 +8,7 @@ class ProductService extends BaseService{
 
     public function add($entity){
         return parent::add($entity);
-
     }
+    
 }
 ?>

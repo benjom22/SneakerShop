@@ -69,58 +69,11 @@
 
      <div class="small-container">
         <h2 class="title">Featured Products</h2>
-        <div class="row">
-            <div class="col-4">
-                <img src="images/aj11.jpg">
-                <h4>Air Jordan 11 Low</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>90.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/force.jpg">
-                <h4>Nike Air Force 1</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>70.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/lbj.jpg">
-                <h4>Los Angeles Lakers T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>35.00$</p>
-            </div>
-            <div class="col-4">
-                <img src="images/lbjcity.jpg">
-                <h4>LeBron James City Edition</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>              
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>45.00$</p>
-            </div>
+        <div class="row" id="featured">
         </div>
         <h2 class="title">Latest Products</h2>
           <div class="row" id="latest">
+          </div>
         </div>
 
     <!--Offer-->
@@ -138,6 +91,7 @@
                         Legendary Jordan shoes designed for one of the best ever players,
                         Michael Jordan.
                     </small>
+                    <br>
                     <a href="" class="btn">Buy Now &#8594;</a>
                 </div>
             </div>
@@ -151,42 +105,21 @@
         <div class="row">
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Best shop for casual style and for those with good taste in sport style</p>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                </div>
+                <p>Best shop for casual style and for those with good taste in sport style.</p>
                 <img src="images/juka.jpg">
                 <h3>Jusuf Nurkic</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Best shop for casual style and for those with good taste in sport style</p>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                </div>
-                <img src="images/juka.jpg">
-                <h3>Jusuf Nurkic</h3>
+                <p>Amazing quality and fast shipment.</p>
+                <img src="images/dzeko.jpg">
+                <h3>Edin Dzeko</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-quote-left"></i>
-                <p>Best shop for casual style and for those with good taste in sport style</p>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                </div>
-                <img src="images/juka.jpg">
-                <h3>Jusuf Nurkic</h3>
+                <p>Incredible service and prices at very high level.</p>
+                <img src="images/begovic.jpg">
+                <h3>Asmir Begovic</h3>
             </div>
         </div>
     </div>
@@ -267,12 +200,28 @@
             var html = '';
             for(var i=0; i<data.length; i++){
                 html+=  '<div class="col-4" onClick="singleProduct('+data[i].id+')">'+     
-                        '<img src="images/aj11.jpg">'+
+                        '<img src='+data[i].productPhoto+'>'+
                         '<h4>'+data[i].productName+'</h4>'+
                         '<p>'+data[i].productPrice+"$"+'</p>'+
                         '</div>';              
             }
             $("#latest").html(html);
+            console.log(data);
+            });
+        }
+
+        getFeaturedProducts();
+        function getFeaturedProducts(){
+            $.get('../rest/featured', function(data){
+            var html = '';
+            for(var i=0; i<data.length; i++){
+                html+=  '<div class="col-4">'+
+                '<img src='+data[i].productPhoto+'  onClick="singleProduct('+data[i].id+')">'+
+                '<h4>'+data[i].productName+'</h4>'+
+                '<p>'+data[i].productPrice+"$"+'</p>'+
+                '</div>';              
+            }
+            $("#featured").html(html);
             console.log(data);
             });
         }

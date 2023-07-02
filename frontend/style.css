@@ -39,7 +39,7 @@ p{
 }
 
 .container{
-    max-width: 1300px;
+    max-width: 1600px;
     margin: auto;
     padding-left: 25px;
     padding-right: 25px;
@@ -333,6 +333,7 @@ select:focus{
 
 .single-product .col-2 img{
     padding: 0;
+
 }
 
 .single-product .col-2{
@@ -379,6 +380,10 @@ input:focus{
     cursor: pointer;
 } 
 
+
+.row-2 .btn{
+    border-style: none;
+}
 
 /*---- cart items ----*/
 
@@ -444,8 +449,23 @@ th:last-child{
     text-align: right;
 }
 
+/*---- login page ----*/
 
+.container2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
+.container2 button{
+    border-style: none;
+    margin-top: 20px ;
+}
+
+.container2 button:first-child {
+  margin-bottom: 5px;
+}
 
 
 

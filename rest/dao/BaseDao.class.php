@@ -33,12 +33,6 @@ class BaseDao{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function get_latest()
-    {
-        $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name . " ORDER BY id DESC LIMIT 4");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
     public function get_by_id($id)
     {
@@ -82,12 +76,21 @@ class BaseDao{
         return $entity;
     }
 
-
-
     public function delete($id){
         $stmt = $this->conn->prepare("DELETE FROM " . $this->table_name . " WHERE id = :id");
         $stmt->bindParam(':id', $id); #prevent SQL injection
         $stmt->execute();
+    }
+
+    protected function query($query, $params){
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    protected function query_unique($query, $params){
+        $results = $this->query($query, $params);
+        return reset($results);
     }
 
 
