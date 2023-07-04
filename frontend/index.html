@@ -24,21 +24,19 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
-                        <li><a href="">Account</a></li>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>  
                 </nav>
-                <img src="images/cart.png" width="30px" height="30px">
+                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
                 <img src="images/hamburger.png" class="menu-icon" onclick="menutoggle()">
             </div>
             <div class="row">
                 <div class="col-2">
                     <h1>Express your style !</h1>
                     <p>Change your look with new products and the best prices</p>
-                    <a href="products.html" class="btn">Explore now &#8594; </a>
+                    <a href="#products" class="btn">Explore now &#8594; </a>
                 </div>
                 <div class="col-2">
                     <img src="images/gomez.png">
@@ -46,25 +44,6 @@
             </div>
         </div>
     </div>
-
-    <!--Featured Categories-->
-
-    <div class="categories">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-3">
-                    <img src="images/men1.jpg">
-                </div>
-                <div class="col-3">
-                    <img src="images/women1.jpg">
-                </div>
-                <div class="col-3">
-                    <img src="images/shoes1.jpg">
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!--Featured Products-->
 
      <div class="small-container">
@@ -216,7 +195,7 @@
             var html = '';
             for(var i=0; i<data.length; i++){
                 html+=  '<div class="col-4">'+
-                '<img src='+data[i].productPhoto+'  onClick="singleProduct('+data[i].id+')">'+
+                '<a href="#single-product">'+'<img src='+data[i].productPhoto+'  onClick="singleProduct('+data[i].id+')">'+ '</a>'+
                 '<h4>'+data[i].productName+'</h4>'+
                 '<p>'+data[i].productPrice+"$"+'</p>'+
                 '</div>';              
@@ -228,10 +207,11 @@
 
         function singleProduct(productId){
             localStorage.setItem("Productid", productId);
-            window.location.href = 'single-product.html';
+            //window.location.href = '#single-product';
         }
 
     </script>
+
 
 </body>
 </html>

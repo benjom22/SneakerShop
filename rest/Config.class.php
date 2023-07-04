@@ -19,5 +19,9 @@ class Config {
     public static function DB_SCHEMA(){
         return 'sneakershop';
     }
+
+    public static function JWT_SECRET(){
+        return 'ezcb9s8UcF';
+    }
 }
 ?>

@@ -19,23 +19,24 @@
     
 </head>
 <body>
+  
     <div class="container">
-        <div class="navbar">
-            <div class="logo">
-                <img src="images/logo.jpg" width="125px">
-            </div>
-            <nav>
-                <ul id="MenuItems">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Contact</a></li>
-                    <li><a href="">Account</a></li>
-                </ul>   
-            </nav>
-            <img src="images/cart.png" width="30px" height="30px">
-            <img src="images/hamburger.png" class="menu-icon" onclick="menutoggle()">
+      <div class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpg" width="125px">
         </div>
+        <nav>
+            <ul id="MenuItems">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a href="">Account</a></li>
+            </ul>  
+        </nav>
+        <img src="images/cart.png" width="30px" height="30px">
+        <img src="images/hamburger.png" class="menu-icon" onclick="menutoggle()">
+    </div>
     </div>
 
     <div class="container marketing" style="margin-top: 100px;">
@@ -44,11 +45,11 @@
           <form id="login-form">
             <div class="mb-3">
               <label class="form-label">Email address</label>
-              <input type="email" name="email" class="form-control" />
+              <input type="email" id="email" name="email" class="form-control" />
             </div>
             <div class="mb-3">
               <label class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" />
+              <input type="password" id="password" name="password" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
           </form>

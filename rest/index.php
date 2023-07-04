@@ -1,10 +1,12 @@
 <?php
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require "../vendor/autoload.php";
+require_once __DIR__ . '/../vendor/autoload.php';
 require "services/SizeService.php";
 require "services/CategoryService.php";
 require "services/ColorService.php";
@@ -25,8 +27,6 @@ Flight::register("productphoto_service", "ProductPhotoService");
 Flight::register("user_service", "UserService");
 Flight::register("vendor_service", "VendorService");
 Flight::register('userDao', "UserDao");
-
-
 
 require_once 'routes/SizeRoutes.php';
 require_once 'routes/CategoryRoutes.php';

@@ -13,7 +13,7 @@ var UserService = {
   },
   login: function (entity) {
     $.ajax({
-      url: "rest/login",
+      url: "../rest/login",
       type: "POST",
       data: JSON.stringify(entity),
       contentType: "application/json",
@@ -24,7 +24,7 @@ var UserService = {
         window.location.replace("admin.html");
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
-        toastr.error(XMLHttpRequest.responseJSON.message);
+        console.log(XMLHttpRequest.responseJSON.message);
       },
     });
   },

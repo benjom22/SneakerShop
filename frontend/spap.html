@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakerShop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <img src="images/logo.jpg" width="125px">
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Account</a></li>
+                    </ul>  
+                </nav>
+                <img src="images/cart.png" width="30px" height="30px">
+                <img src="images/hamburger.png" class="menu-icon" onclick="menutoggle()">
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <h1>Express your style !</h1>
+                    <p>Change your look with new products and the best prices</p>
+                    <a href="products.html" class="btn">Explore now &#8594; </a>
+                </div>
+                <div class="col-2">
+                    <img src="images/gomez.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Categories -->
+
+    <!-- Featured Products -->
+
+    <div class="small-container">
+        <h2 class="title">Featured Products</h2>
+        <div class="row" id="featured">
+        </div>
+        <h2 class="title">Latest Products</h2>
+        <div class="row" id="latest">
+        </div>
+    </div>
+
+    <!-- Offer -->
+
+    <div class="offer">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-2">
+                    <img src="images/aj11.jpg" class="offer-img">
+                </div>
+                <div class="col-2">
+                    <p>Exclusive products</p>
+                    <h1>Air Jordan 11</h1>
+                    <small>
+                        Legendary Jordan shoes designed for one of the best ever players,
+                        Michael Jordan.
+                    </small>
+                    <br>
+                    <a href="" class="btn">Buy Now &#8594;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial -->
+
+    <div class="testimonial">
+        <!-- Testimonial content here -->
+    </div>
+
+    <!-- Brands -->
+
+    <div class="brands">
+        <!-- Brands content here -->
+    </div>
+
+    <!-- Footer -->
+
+    <div class="footer">
+        <!-- Footer content here -->
+    </div>
+
+    <!-- Js Toggle Menu -->
+    <script>
+        // Toggle menu function
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+
+        function menutoggle() {
+            if (MenuItems.style.maxHeight == "0px") {
+                MenuItems.style.maxHeight = "200px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+    </script>
+
+    <!-- JavaScript code to load and display products -->
+    <script>
+        // Function to load and display latest products
+        function getLatestProducts() {
+            $.get('../rest/latest', function(data) {
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    html += '<div class="col-4" onClick="singleProduct(' + data[i].id + ')">' +
+                        '<img src=' + data[i].productPhoto + '>' +
+                        '<h4>' + data[i].productName + '</h4>' +
+                        '<p>' + data[i].productPrice + "$" + '</p>' +
+                        '</div>';
+                }
+                $("#latest").html(html);
+                console.log(data);
+            });
+        }
+
+        // Function to load and display featured products
+        function getFeaturedProducts() {
+            $.get('../rest/featured', function(data) {
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    html += '<div class="col-4">' +
+                        '<img src=' + data[i].productPhoto + '  onClick="singleProduct(' + data[i].id + ')">' +
+                        '<h4>' + data[i].productName + '</h4>' +
+                        '<p>' + data[i].productPrice + "$" + '</p>' +
+                        '</div>';
+                }
+                $("#featured").html(html);
+                console.log(data);
+            });
+        }
+
+        // Function to handle the click event on a single product
+        function singleProduct(productId) {
+            localStorage.setItem("Productid", productId);
+            // Load the single product page dynamically
+            loadContent('single-product.html');
+        }
+
+        // Function to load content dynamically
+        function loadContent(url) {
+            // Perform AJAX request to fetch the content HTML
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var contentDiv = document.getElementById('content');
+                    contentDiv.innerHTML = xhr.responseText;
+                    // After loading the content, call any necessary functions
+                    if (url === 'products.html') {
+                        getLatestProducts();
+                        getFeaturedProducts();
+                    }
+                } else {
+                    console.log('Error:', xhr.status);
+                }
+            };
+            xhr.onerror = function() {
+                console.log('Error:', xhr.status);
+            };
+            xhr.send();
+        }
+
+        // Load initial content or home page on page load
+        window.onload = function() {
+            loadContent('index.html');
+        };
+    </script>
+</body>
+</html>
