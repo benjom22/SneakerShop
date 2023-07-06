@@ -1,0 +1,132 @@
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <h1>Express your style !</h1>
+                <p>Change your look with new products and the best prices</p>
+                <a href="#products" class="btn">Explore now &#8594; </a>
+            </div>
+            <div class="col-2">
+                <img src="images/gomez.png">
+            </div>
+        </div>
+    </div>
+
+
+
+<!--Featured Products-->
+
+<div class="small-container">
+    <h2 class="title">Featured Products</h2>
+    <div class="row" id="featured">
+    </div>
+    <h2 class="title">Latest Products</h2>
+      <div class="row" id="latest">
+      </div>
+</div>
+
+<!--Offer-->
+
+<div class="offer">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-2">
+                <img src="images/aj11.jpg" class="offer-img">
+            </div>
+            <div class="col-2">
+                <p>Exclusive products</p>
+                <h1>Air Jordan 11</h1>
+                <small>
+                    Legendary Jordan shoes designed for one of the best ever players,
+                    Michael Jordan.
+                </small>
+                <br>
+                <a href="#products" class="btn">Buy Now &#8594;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Testimonial-->
+
+<div class="testimonial">
+    <div class="row">
+        <div class="col-3">
+            <i class="fa fa-quote-left"></i>
+            <p>Best shop for casual style and for those with good taste in sport style.</p>
+            <img src="images/juka.jpg">
+            <h3>Jusuf Nurkic</h3>
+        </div>
+        <div class="col-3">
+            <i class="fa fa-quote-left"></i>
+            <p>Amazing quality and fast shipment.</p>
+            <img src="images/dzeko.jpg">
+            <h3>Edin Dzeko</h3>
+        </div>
+        <div class="col-3">
+            <i class="fa fa-quote-left"></i>
+            <p>Incredible service and prices at very high level.</p>
+            <img src="images/begovic.jpg">
+            <h3>Asmir Begovic</h3>
+        </div>
+    </div>
+</div>
+
+<!--Brands-->
+
+<div class="brands">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-5">
+                <img src="images/paypal.png">
+            </div>
+            <div class="col-5">
+                <img src="images/coca-cola.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    getLatestProducts();
+    function getLatestProducts(){
+        $.get('rest/latest', function(data){
+        var html = '';
+        for(var i=0; i<data.length; i++){
+            html+=  '<div class="col-4">'+
+            '<a href="#product">'+'<img src='+data[i].productPhoto+'  onClick="singleProduct('+data[i].id+')">'+ '</a>'+    
+                    '<h4>'+data[i].productName+'</h4>'+
+                    '<p>'+data[i].productPrice+"$"+'</p>'+
+                    '</div>';              
+        }
+        $("#latest").html(html);
+        console.log(data);
+        });
+    }
+
+    getFeaturedProducts();
+    function getFeaturedProducts(){
+        $.get('rest/featured', function(data){
+        var html = '';
+        for(var i=0; i<data.length; i++){
+            html+=  '<div class="col-4">'+
+            '<a href="#product">'+'<img src='+data[i].productPhoto+'  onClick="singleProduct('+data[i].id+')">'+ '</a>'+
+            '<h4>'+data[i].productName+'</h4>'+
+            '<p>'+data[i].productPrice+"$"+'</p>'+
+            '</div>';              
+        }
+        $("#featured").html(html);
+        console.log(data);
+        });
+    }
+
+    function singleProduct(productId){
+        localStorage.setItem("Productid", productId);
+        //window.location.href = '#single-product';
+    }
+
+</script>
