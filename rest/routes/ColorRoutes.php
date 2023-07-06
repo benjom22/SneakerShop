@@ -61,7 +61,7 @@ Flight::route("DELETE /colors/@id", function($id){
 *     path="/color", security={{"ApiKeyAuth": {}}},
 *     description="Add color",
 *     tags={"colors"},
-*     @OA\RequestBody(description="Add new student", required=true,
+*     @OA\RequestBody(description="Add new color", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
 *    				@OA\Property(property="colorName", type="string", example="Red",	description="Color name"),
@@ -120,6 +120,12 @@ Flight::route("PUT /color/@id", function($id){
     ]);
 });
 
+/**
+ * @OA\Get(path="/colors/{name}", tags={"colors"}, security={{"ApiKeyAuth": {}}},
+ *         @OA\Parameter(in="path", name="name", example=1, description="Color ID"),
+ *         @OA\Response( response=200, description="List of colors by id.")
+ * )
+ */
 Flight::route("GET /colors/@name", function($name){
     echo "Hello from /colors route with name= ".$name;
 });

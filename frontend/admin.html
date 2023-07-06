@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="js/user-service.js"></script>
+    <script src="js/admin-service.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -35,15 +36,8 @@
                 <img src="images/logo.jpg" width="125px">
             </div>
             <nav>
-                <ul id="MenuItems">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Contact</a></li>
-                    <li><a href="">Account</a></li>
-                </ul>   
+                <button class="btn" onclick="UserService.logout()">logout</button>   
             </nav>
-            <img src="images/cart.png" width="30px" height="30px">
             <img src="images/hamburger.png" class="menu-icon" onclick="menutoggle()">
         </div>
     </div>
@@ -55,7 +49,7 @@
     data-toggle="modal"
     data-target="#addItemModal"
   >
-    Add student
+    Add Item
   </button>
   <div class="modal fade" id="addItemModal" role="dialog">
     <div class="modal-dialog">
@@ -166,63 +160,54 @@ aria-hidden="true"
 <!-- Edit Modal -->
 <!-- Modal -->
 <div class="modal fade" id="editItemModal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content" id="editItemModal">
-        <form id="editItemForm">
-          <div class="modal-header">
-            <h4 class="modal-title">Edit Item</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content" id="editItemModal">
+      <form id="editItemForm">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Item</h4>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="edit_item_id" name="id" required hidden />
+          <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input
+              type="text"
+              id="edit_productName"
+              name="productName"
+              required
+              class="form-control"
+            />
           </div>
-          <div class="modal-body">
-            <input type="text" id="edit_item_id" name="id" required hidden />
-            <div class="form-group">
-              <label for="productName">Product Name:</label>
-              <input
-                type="text"
-                id="edit_product_name"
-                name="productName"
-                required
-                class="form-control"
-              />
-            </div>
-            <div>
-              <label for="productDescription">Product Description:</label>
-              <input
-                type="text"
-                id="edit_product_description"
-                name="productDescription"
-                class="form-control"
-              />
-            </div>
-            <div>
-              <label for="productPrice">Price</label>
-              <input
-                type="text"
-                id="edit_price"
-                name="productPrice"
-                class="form-control"
-              />
-            </div>
+          <div>
+            <label for="productDescription">Product Description</label>
+            <input
+              type="text"
+              id="edit_productDescription"
+              name="productDescription"
+              class="form-control"
+            />
           </div>
-          <div class="error"><span></span></div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-default"
-              id="close_button"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="submit" class="btn btn-success" onclick="editItem()">Submit</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="error"><span></span></div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-default"
+            id="close_button"
+            data-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-success" onclick="editItem()">Submit</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 
    <div class="tables" id="tables">
     <table id="tableP">
@@ -231,6 +216,12 @@ aria-hidden="true"
    </div>
 
 </body>
+<script>
+  var token = localStorage.getItem("token");
+    if (!token){
+      window.location.replace("login.html");
+    }
+</script>
 
 <script>
 
@@ -278,53 +269,64 @@ aria-hidden="true"
 }
 
 $("#addItemForm").validate({
-    focusCleanup: true,
-    errorElement: "em",
-    rules: {
-      productName: "required",
-      productDescription: "required",
-      productPrice: "required"
-    },
-    messages: {
-      productName: "Product name field is required",
-      productDescription: "Product description field is required",
-      productPrice: "Price is required",
-    },
-    highlight: function (element, errorClass) {
-      $(element).fadeOut(function () {
-        $(element).fadeIn();
-      });
-    },
-    errorContainer: "#messageBox1",
-    errorLabelContainer: "#messageBox1 ul",
-    wrapper: "li",
-    submitHandler: function (form, validator) {
-      $.post("../rest/product", $("#addItemForm").serialize())
-        .done(function () {
-          toastr.success("Item added");
-          $("#addItemModal").modal("toggle");
-          getProducts();
-          form.reset();
-        })
-        .fail(function () {
-          toastr.error("Item not added");
-        });
-    },
-    invalidHandler: function (event, validator) {
-      var errors = validator.numberOfInvalids();
-      toastr.error("Error");
-      if (errors) {
-        var message =
-          errors == 1
-            ? "You missed 1 field."
-            : "You missed " + errors + " fields.";
-        $("div.error span").html(message);
-        $("div.error").show();
-      } else {
-        $("div.error").hide();
+  focusCleanup: true,
+  errorElement: "em",
+  rules: {
+    productName: "required",
+    productDescription: "required",
+    productPrice: "required"
+  },
+  messages: {
+    productName: "Product name field is required",
+    productDescription: "Product description field is required",
+    productPrice: "Price is required",
+  },
+  highlight: function (element, errorClass) {
+    $(element).fadeOut(function () {
+      $(element).fadeIn();
+    });
+  },
+  errorContainer: "#messageBox1",
+  errorLabelContainer: "#messageBox1 ul",
+  wrapper: "li",
+  submitHandler: function (form, validator) {
+    $.ajax({
+      url: "../rest/product",
+      type: "POST",
+      data: $("#addItemForm").serialize(),
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader(
+          "Authorization",
+          localStorage.getItem("token")
+        );
+      },
+      success: function () {
+        toastr.success("Item added");
+        $("#addItemModal").modal("toggle");
+        getProducts();
+        form.reset();
+      },
+      error: function () {
+        toastr.error("Item not added");
       }
-    },
+    });
+  },
+  invalidHandler: function (event, validator) {
+    var errors = validator.numberOfInvalids();
+    toastr.error("Error");
+    if (errors) {
+      var message =
+        errors == 1
+          ? "You missed 1 field."
+          : "You missed " + errors + " fields.";
+      $("div.error span").html(message);
+      $("div.error").show();
+    } else {
+      $("div.error").hide();
+    }
+  },
 });
+
 
 function openConfirmationDialog(id){
         $("#deleteItemModal").modal('show');
@@ -335,13 +337,18 @@ function openConfirmationDialog(id){
 function deleteItem(){
         $.ajax({
             'url': '../rest/products/'+$("#product_id").val(),
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader(
+              "Authorization",
+              localStorage.getItem("user_token")
+            );
+           },
             'type': 'DELETE',
             success: function(response){
                 console.log(response);
                 $("#deleteItemModal").modal('hide');
                 toastr.success(response.message);
                 getProducts();
-                //alert("Deleted");
             },
             error: function(XMLHttpRequest, textStatus, errorThrow){
                 console.log("Error: "+ errorThrow);
@@ -349,11 +356,22 @@ function deleteItem(){
         })
    }
 
-function showEditDialog(id) {
-    $("#editItemModal").modal("show");
-    $("#editModalSpinner").show();
-    $("#editItemForm").hide();
-    $.get("../rest/products/" + id, function (data) {
+  function showEditDialog(id) {
+  $("#editItemModal").modal("show");
+  $("#editModalSpinner").show();
+  $("#editItemForm").hide();
+  
+  $.ajax({
+    url: "../rest/products/" + id,
+    method: "GET",
+    dataType: "json",
+    beforeSend: function (xhr) {
+        xhr.setRequestHeader(
+          "Authorization",
+          localStorage.getItem("token")
+        );
+      },
+    success: function (data) {
       console.log(data);
       $("#edit_product_name").val(data.productName);
       $("#edit_product_description").val(data.productDescription);
@@ -361,37 +379,49 @@ function showEditDialog(id) {
       $("#edit_item_id").val(data.id);
       $("#editModalSpinner").hide();
       $("#editItemForm").show();
-    });
-  }
-
-function editItem() {
-    $("#editItemForm").validate({
-      submitHandler: function (form, validator) {
-        data = {
-          productName: $("#edit_product_name").val(),
-          productDescription: $("#edit_product_description").val(),
-          productPrice: $("#edit_price").val(),
-        };
-        $.ajax({
-          url: "../rest/product/"+$("#edit_item_id").val(),
-          type: "PUT",
-          data: JSON.stringify(data),
-          contentType: "application/json",
-          dataType: "json",
-          success: function (result) {
-            toastr.success("Item has been updated successfully");
-            $("#editItemModal").modal("toggle");
-            getProducts();
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) {
-            toastr.error("Error! Item has not been updated.");
-          },
-        });
-      },
-    });
+    },
+    error: function (xhr, status, error) {
+      console.log('Error:', error);
+    }
+  });
 }
 
 
+function editItem() {
+  $("#editItemForm").validate({
+    submitHandler: function (form, validator) {
+      var data = {
+        productName: $("#edit_product_name").val(),
+        productDescription: $("#edit_product_description").val(),
+        productPrice: $("#edit_price").val(),
+      };
+      
+      $.ajax({
+        url: "../rest/product/" + $("#edit_item_id").val(),
+        type: "PUT",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        dataType: "json",
+        beforeSend: function (xhr) {
+        xhr.setRequestHeader(
+          "Authorization",
+          localStorage.getItem("token")
+        );
+      },
+        success: function (result) {
+          toastr.success("Item has been updated successfully");
+          $("#editItemModal").modal("toggle");
+          getProducts();
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          toastr.error("Error! Item has not been updated.");
+        },
+      });
+    },
+  });
+}
+
 
 </script>
+
 </html>

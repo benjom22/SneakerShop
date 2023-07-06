@@ -1,6 +1,6 @@
 var UserService = {
   init: function () {
-    var token = localStorage.getItem("user_token");
+    var token = localStorage.getItem("token");
     if (token) {
       window.location.replace("admin.html");
     }
@@ -20,7 +20,7 @@ var UserService = {
       dataType: "json",
       success: function (result) {
         console.log(result);
-        localStorage.setItem("user_token", result.token);
+        localStorage.setItem("token", result.token);
         window.location.replace("admin.html");
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {

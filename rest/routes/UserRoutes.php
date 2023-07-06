@@ -12,7 +12,7 @@ use Firebase\JWT\Key;
 *     @OA\RequestBody(description="Login", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
-*             @OA\Property(property="email", type="string", example="demo@gmail.com",	description="Student email" ),
+*             @OA\Property(property="email", type="string", example="demo@gmail.com",	description="Admin email" ),
 *             @OA\Property(property="password", type="string", example="12345",	description="Password" ),
 *        )
 *     )),

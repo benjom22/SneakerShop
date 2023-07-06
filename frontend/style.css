@@ -11,7 +11,7 @@ body{
 .navbar{
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 5px;
 }
 
 nav{
@@ -31,8 +31,10 @@ nav ul li{
 
 a{
     text-decoration: none;
-    color: #555;
+    color: #fffafa;
 }
+
+
 
 p{
     color: #555
@@ -70,7 +72,7 @@ p{
 
 .btn{
     display: inline-block;
-    background-color: #970478;
+    background-color: #ff523b;
     color: #fff;
     padding: 8px 30px;
     margin: 30px 0px;
@@ -83,7 +85,8 @@ p{
 }
 
 .header{
-    background: radial-gradient(#fff,#ffd6d6);
+    background: #022785;
+    height: 120px;
 }
 
 .header .row{
