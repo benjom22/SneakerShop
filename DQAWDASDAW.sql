@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: sneakershop
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	5.5.5-10.4.22-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emailAddress` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin`
+--
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (3,'admin@gmail.com','admin12345');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `category`
 --
 
@@ -23,10 +48,10 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `categoryID` int NOT NULL AUTO_INCREMENT,
+  `categoryID` int(11) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(45) NOT NULL,
   PRIMARY KEY (`categoryID`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,11 +72,11 @@ DROP TABLE IF EXISTS `colors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `colors` (
-  `colorID` int NOT NULL AUTO_INCREMENT,
+  `colorID` int(11) NOT NULL AUTO_INCREMENT,
   `colorName` varchar(45) NOT NULL,
   `colorAvailability` enum('Yes','No') NOT NULL,
   PRIMARY KEY (`colorID`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,11 +97,11 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `orderID` int NOT NULL AUTO_INCREMENT,
+  `orderID` int(11) NOT NULL AUTO_INCREMENT,
   `orderType` varchar(45) DEFAULT NULL,
   `orderDescription` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`orderID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,12 +121,12 @@ DROP TABLE IF EXISTS `payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payments` (
-  `paymentID` int NOT NULL AUTO_INCREMENT,
+  `paymentID` int(11) NOT NULL AUTO_INCREMENT,
   `paymentType` varchar(45) DEFAULT NULL,
   `paymentDate` datetime NOT NULL,
-  `paymentAmount` int DEFAULT NULL,
+  `paymentAmount` int(11) DEFAULT NULL,
   PRIMARY KEY (`paymentID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,9 +146,9 @@ DROP TABLE IF EXISTS `product_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_order` (
-  `productOrderID` int NOT NULL AUTO_INCREMENT,
+  `productOrderID` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`productOrderID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,10 +168,10 @@ DROP TABLE IF EXISTS `productphoto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `productphoto` (
-  `photoID` int NOT NULL AUTO_INCREMENT,
+  `photoID` int(11) NOT NULL AUTO_INCREMENT,
   `pathToPhoto` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`photoID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,15 +191,16 @@ DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `productName` varchar(45) NOT NULL,
   `productAvailability` enum('Yes','No') DEFAULT NULL,
-  `productPrice` int DEFAULT NULL,
+  `productPrice` int(11) DEFAULT NULL,
   `productDescription` varchar(100) DEFAULT NULL,
-  `productInStock` int DEFAULT NULL,
+  `productInStock` int(11) DEFAULT NULL,
   `productDiscount` float DEFAULT NULL,
+  `productPhoto` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +209,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Nike','Yes',34,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',232,21),(5,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(6,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(7,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(8,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(9,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(10,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(11,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(12,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(13,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(14,'Adidas','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23),(15,'Jordan 11','Yes',99,'Air Jordan is a line of basketball shoes and athletic apparel produced by Nike',20,0),(16,'Jordan 11','Yes',110,'Air Jordan is a line of basketball shoes and athletic apparel produced by Nike',20,0),(17,'Nike Air Jordan 1','Yes',110,'Air Jordan is a line of basketball shoes and athletic apparel produced by Nike',20,0),(18,'Nike Air Max 97','Yes',80,'Nike Air Max is a line of shoes produced by Nike, Inc., with the first model released in 1987.',20,0),(19,'Nike Air Max 95','Yes',60,'Nike Air Max is a line of shoes produced by Nike, Inc., with the first model released in 1987.',20,0),(20,'Nike Air Max','Yes',60,'Nike Air Max is a line of shoes produced by Nike, Inc., with the first model released in 1987.',20,0),(21,'Nike Kobe 5','Yes',69,'Kobe Bryant\'s signature shoes have become synonymous with performance and attention to detail.',20,0),(22,'Nike Kobe 6','Yes',69,'Kobe Bryant\'s signature shoes have become synonymous with performance and attention to detail.',20,0),(23,'Nike Kobe 7','Yes',69,'Kobe Bryant\'s signature shoes have become synonymous with performance and attention to detail.',20,0),(24,'Nike Kobe 8','Yes',69,'Kobe Bryant\'s signature shoes have become synonymous with performance and attention to detail.',20,0),(25,'Nike LeBron X','Yes',69,'LeBron James\'s signature shoes have become synonymous with performance and attention to detail.',20,0),(26,'Nike LeBron YNWA','Yes',69,'LeBron James\'s signature shoes have become synonymous with performance and attention to detail.',20,0),(27,'Nike LeBron XX','Yes',69,'LeBron James\'s signature shoes have become synonymous with performance and attention to detail.',20,0),(28,'Nike Space Hippie','Yes',50,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',40,0),(29,'Nike Air Force 1','Yes',50,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',40,0),(30,'Nike Dunk','Yes',50,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',40,0);
+INSERT INTO `products` VALUES (1,'Nike Dunk High','Yes',34,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',232,21,'images/dunkhigh.jpg'),(6,'Adidas Boost','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23,'images/boost.jpg'),(7,'Adidas Smith','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23,'images/smith.jpg'),(9,'Adidas Superstar','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23,'images/superstar.jpg'),(10,'Adidas Gazelle','Yes',34,'Largest sportswear manufacturer in Europe, and the second largest in the world, after Nike.',23,23,'images/gazelle.jpg'),(31,'Nike Dunk High SE','Yes',150,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',10,0,'images/dunkhighspec.jpg'),(33,'Nike GT','Yes',120,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',10,0,'images/nikegt.jpg'),(15,'Jordan 11 Yellow','Yes',99,'Air Jordan is a line of basketball shoes and athletic apparel produced by Nike',20,0,'images/jordan11yellow.jpg'),(16,'Jordan 11','Yes',110,'Air Jordan is a line of basketball shoes and athletic apparel produced by Nike',20,0,'images/jordan11.jpg'),(17,'Nike Air Jordan 1','Yes',110,'Air Jordan is a line of basketball shoes and athletic apparel produced by Nike',20,0,'images/airjordan1.jpg'),(18,'Nike Air Max 97','Yes',80,'Nike Air Max is a line of shoes produced by Nike, Inc., with the first model released in 1987.',20,0,'images/airmax97.jpg'),(19,'Nike Air Max 95','Yes',60,'Nike Air Max is a line of shoes produced by Nike, Inc., with the first model released in 1987.',20,0,'images/airmax95.jpg'),(20,'Nike Air Max','Yes',60,'Nike Air Max is a line of shoes produced by Nike, Inc., with the first model released in 1987.',20,0,'images/airmax.jpg'),(24,'Nike Kobe 9','Yes',69,'Kobe Bryant\'s signature shoes have become synonymous with performance and attention to detail.',20,0,'images/kobe9.jpg'),(25,'Nike LeBron IX','Yes',69,'LeBron James\'s signature shoes have become synonymous with performance and attention to detail.',20,0,'images/lbjix.jpg'),(26,'Nike LeBron YNWA','Yes',69,'LeBron James\'s signature shoes have become synonymous with performance and attention to detail.',20,0,'images/lbjynwa.jpg'),(27,'Nike LeBron XX','Yes',69,'LeBron James\'s signature shoes have become synonymous with performance and attention to detail.',20,0,'images/lbjxx.jpg'),(28,'Nike Space Hippie','Yes',50,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',40,0,'images/hippies.jpg'),(29,'Nike Air Force 1','Yes',50,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',40,0,'images/force.jpg'),(30,'Nike Dunk','Yes',50,'The world\'s largest athletic apparel company, best known for its footwear, apparel, and equipment.',40,0,'images/dunks.jpg');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,11 +221,11 @@ DROP TABLE IF EXISTS `sizes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sizes` (
-  `sizeID` int NOT NULL AUTO_INCREMENT,
+  `sizeID` int(11) NOT NULL AUTO_INCREMENT,
   `size` varchar(45) DEFAULT NULL,
   `description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`sizeID`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,33 +239,6 @@ INSERT INTO `sizes` VALUES (1,'40',NULL),(2,'41',NULL),(3,'42',NULL),(4,'43',NUL
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(45) DEFAULT NULL,
-  `lastName` varchar(45) DEFAULT NULL,
-  `age` date DEFAULT NULL,
-  `emailAddress` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Kelim','Selmanovic','0000-00-00','kela@gmail.com'),(2,'Lejla','Brescic','0000-00-00','lbrescic@gmail.com');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `vendors`
 --
 
@@ -247,16 +246,16 @@ DROP TABLE IF EXISTS `vendors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vendors` (
-  `vendorID` int NOT NULL AUTO_INCREMENT,
+  `vendorID` int(11) NOT NULL AUTO_INCREMENT,
   `vendorCompanyName` varchar(45) NOT NULL,
   `vendorAdress` varchar(45) DEFAULT NULL,
   `vendorCityName` varchar(45) DEFAULT NULL,
-  `vendorPostalCode` int DEFAULT NULL,
-  `vendorPhone` int DEFAULT NULL,
+  `vendorPostalCode` int(11) DEFAULT NULL,
+  `vendorPhone` int(11) DEFAULT NULL,
   `vendorWebSite` varchar(45) DEFAULT NULL,
   `vendorscol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`vendorID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -277,4 +276,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-14 22:40:35
+-- Dump completed on 2023-07-02 17:56:44
