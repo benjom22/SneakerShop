@@ -22,9 +22,7 @@
     href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css"
     rel="stylesheet"
     />
-
-
-
+  
 
 
 </head>
@@ -41,6 +39,10 @@
             <img src="images/hamburger.png" class="menu-icon" onclick="menutoggle()">
         </div>
     </div>
+
+    <strong>ID:</strong> <span id="userId"></span>
+    <strong>Email:</strong> <span id="userEmail"></span>
+
 
     <!-- Add Modal -->
     <button
@@ -340,7 +342,7 @@ function deleteItem(){
             beforeSend: function (xhr) {
             xhr.setRequestHeader(
               "Authorization",
-              localStorage.getItem("user_token")
+              localStorage.getItem("token")
             );
            },
             'type': 'DELETE',
@@ -423,5 +425,25 @@ function editItem() {
 
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jwt-decode/3.1.2/jwt-decode.min.js"></script>
+<script src="js/jwt-token.js"></script>
+<script>
+
+var token = localStorage.getItem("token"); // Replace with your method to retrieve the token
+
+// Decode the token payload
+var decodedToken = jwt_decode(token);
+
+// Access the information from the decoded payload
+var userId = decodedToken.id;
+var userEmail = decodedToken.email;
+// Access other properties as needed
+
+// Display the information in the HTML elements
+document.getElementById("userId").textContent = userId;
+document.getElementById("userEmail").textContent = userEmail;
+
+</script>
+
 
 </html>

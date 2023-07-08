@@ -10,7 +10,7 @@ class Config {
     }
 
     public static function DB_PASSWORD(){
-        return 'ha10be14';
+        return '';
     }
     public static function DB_PORT(){
         return "3306";
@@ -21,7 +21,7 @@ class Config {
     }
 
     public static function JWT_SECRET(){
-        return 'ezcb9s8UcF';
+        return '';
     }
 }
 ?>

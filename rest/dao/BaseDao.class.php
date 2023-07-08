@@ -65,13 +65,13 @@ class BaseDao{
 
     public function update($entity, $id, $id_column = "id"){
         $query = "UPDATE " . $this->table_name . " SET ";
-        foreach($entity as $column => $value){
+        foreach($entity as $column =>$value){
             $query.= $column . "=:" . $column . ", ";
         }
         $query = substr($query, 0, -2);
-        $query.= " WHERE ${id_column} = :id";
+        $query.=" WHERE ${id_column} = :id";
         $stmt = $this->conn->prepare($query);
-        $entity['id'] = $id;
+        $entity['id']=$id;
         $stmt->execute($entity);
         return $entity;
     }

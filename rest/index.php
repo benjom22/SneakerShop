@@ -37,26 +37,32 @@ require_once 'routes/VendorRoutes.php';
 
 // middleware method for login
 Flight::route('/*', function () {
-  $path = Flight::request()->url;
-  if ($path == '/login' || $path == '/docs.json' || $path == '/test/*') {
-      return true;
-  }
+    $path = Flight::request()->url;
+    if ($path == '/login' || $path == '/docs.json') {
+        return true;
+    }
 
-  $headers = getallheaders();
-  if (@!$headers['Authorization']) {
-      Flight::json(["message" => "Authorization is missing"], 403);
-      return false;
-  } else {
-      try {
-          $decoded = (array)JWT::decode($headers['Authorization'], new Key(Config::JWT_SECRET(), 'HS256'));
-          Flight::set('user', $decoded);
-          return true;
-      } catch (\Exception $e) {
-          Flight::json(["message" => "Authorization token is not valid"], 403);
-          return false;
-      }
-  }
+    $headers = getallheaders();
+    if (!isset($headers['Authorization'])) {
+        Flight::json(["message" => "Authorization is missing"], 403);
+        return false;
+    } else {
+        try {
+            $decoded = (array) JWT::decode($headers['Authorization'], Config::JWT_SECRET(), ['HS256']);
+            $current_time = time();
+            if (isset($decoded['exp']) && $decoded['exp'] < $current_time) {
+                Flight::json(["message" => "Authorization token has expired"], 403);
+                return false;
+            }
+            Flight::set('user', $decoded);
+            return true;
+        } catch (\Exception $e) {
+            Flight::json(["message" => "Authorization token is not valid"], 403);
+            return false;
+        }
+    }
 });
+
   
 
 Flight::route('GET /docs.json', function(){
